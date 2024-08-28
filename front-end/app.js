@@ -64,28 +64,33 @@ document.getElementById("login").addEventListener("submit", async (e) => {
   }
 });
 
-// File Upload
 document.getElementById("upload").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const fileInput = document.getElementById("fileInput").files[0];
+  const urlInput = document.getElementById("urlInput").value;
+  const username = document.getElementById("username").value; // Assuming you have an input for the username
+
   const formData = new FormData();
-  formData.append("file", fileInput);
-  // formData.append("username", loggedInUsername); // Assuming you store logged-in user's username
+  formData.append("url", urlInput);
+  formData.append("username", username); // Send the username with the request
 
   try {
-      const response = await fetch("http://localhost:5000/upload", {
-          method: "POST",
-          body: formData,
-      });
+    const response = await fetch("http://localhost:5000/upload", {
+      method: "POST",
+      body: formData,
+    });
 
-      const result = await response.json();
-      if (response.ok) {
-          document.getElementById("status").textContent = `Success! CID: ${result.cid}`;
-      } else {
-          document.getElementById("status").textContent = "Upload failed. Please try again.";
-      }
+    const result = await response.json();
+    if (response.ok) {
+      document.getElementById(
+        "status"
+      ).textContent = `Success! CID: ${result.cid}`;
+    } else {
+      document.getElementById("status").textContent =
+        "Upload failed. Please try again.";
+    }
   } catch (error) {
-      document.getElementById("status").textContent = "Error occurred: " + error.message;
+    document.getElementById("status").textContent =
+      "Error occurred: " + error.message;
   }
 });

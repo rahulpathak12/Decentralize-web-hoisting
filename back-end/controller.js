@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors"); // Import CORS package
 const { create } = require("ipfs-http-client");
-const fileUpload = require("express-fileupload");
-const fs = require("fs");
+// const fileUpload = require("express-fileupload");
+const axios = require("axios");
 
 const ipfs = create({ host: "127.0.0.1", port: "5001", protocol: "http" });
 
@@ -11,12 +11,12 @@ const { registerUser, loginUser, uploadFile } = require("./connectToNetwork");
 app.use(cors()); // Enable CORS for all routes
 app.use(express.json());
 // Enable files upload
-app.use(
-  fileUpload({
-    useTempFiles: true,
-    tempFileDir: "/tmp/",
-  })
-);
+// app.use(
+//   fileUpload({
+//     useTempFiles: true,
+//     tempFileDir: "/tmp/",
+//   })
+// );
 
 // Registration API
 app.post("/register", async (req, res) => {
@@ -44,17 +44,18 @@ app.post("/login", async (req, res) => {
 // Upload File API
 app.post("/upload", async (req, res) => {
   try {
-    const { username } = req.body;
-    const file = req.files.file; // Middleware should handle this now
-    console.log(file);
+    const { username, url } = req.body;
 
-    // Upload file to IPFS
-    const fileBuffer = fs.readFileSync(file.tempFilePath);
-    const fileAdded = await ipfs.add(fileBuffer);
+    // Fetch the website content
+    const response = await axios.get(url);
+    const websiteContent = response.data;
+
+    // Upload website content to IPFS
+    const fileAdded = await ipfs.add(Buffer.from(websiteContent));
     const cid = fileAdded.cid.toString();
 
     await uploadFile(username, cid);
-    res.status(200).json({ message: "File uploaded successfully", cid });
+    res.status(200).json({ message: "Website uploaded successfully", cid });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });

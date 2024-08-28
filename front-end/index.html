@@ -73,13 +73,13 @@
       <div class="form-card" id="uploadForm" style="display: none">
         <h2>Upload Your Website</h2>
         <form id="upload">
-          <input type="file" id="fileInput" required /><br />
+          <!-- Replace file input with a text input for the URL -->
+          <input type="text" id="username" placeholder="Enter your username" required /><br />
+          <input type="text" id="urlInput" placeholder="Enter website URL" required /><br />
           <button type="submit">Upload</button>
         </form>
         <p id="status"></p>
       </div>
-    </div>
-
     <script src="app.js"></script>
   </body>
 </html>

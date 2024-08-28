@@ -82,10 +82,10 @@ async function uploadFile(username, cid) {
     gateway.disconnect();
 
     // Return a success response
-    return { cid, message: "File uploaded successfully" };
+    return { cid, message: "Website uploaded successfully" };
   } catch (error) {
     // Return an error message
-    return { message: `File upload failed: ${error.message}` };
+    return { message: `Website upload failed: ${error.message}` };
   }
 }
 
