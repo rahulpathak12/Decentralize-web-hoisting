@@ -1,5 +1,6 @@
+
 # SPDX-License-Identifier: Apache-2.0
-version: "2.1"
+version: '2.1'
 
 volumes:
   pgdata:
@@ -7,12 +8,12 @@ volumes:
 
 networks:
   mynetwork.com:
-    external:
-      name: net_test
+    name: fabric_test
 
 services:
+
   explorerdb.mynetwork.com:
-    image: hyperledger/explorer-db:latest
+    image: ghcr.io/hyperledger-labs/explorer-db:latest
     container_name: explorerdb.mynetwork.com
     hostname: explorerdb.mynetwork.com
     environment:
@@ -30,7 +31,7 @@ services:
       - mynetwork.com
 
   explorer.mynetwork.com:
-    image: hyperledger/explorer:latest
+    image: ghcr.io/hyperledger-labs/explorer:latest
     container_name: explorer.mynetwork.com
     hostname: explorer.mynetwork.com
     environment:
@@ -38,18 +39,19 @@ services:
       - DATABASE_DATABASE=fabricexplorer
       - DATABASE_USERNAME=hppoc
       - DATABASE_PASSWD=password
-      - LOG_LEVEL_APP=debug
-      - LOG_LEVEL_DB=debug
-      - LOG_LEVEL_CONSOLE=info
+      - LOG_LEVEL_APP=info
+      - LOG_LEVEL_DB=info
+      - LOG_LEVEL_CONSOLE=debug
       - LOG_CONSOLE_STDOUT=true
       - DISCOVERY_AS_LOCALHOST=false
+      - PORT=${PORT:-8080}
     volumes:
       - ./config.json:/opt/explorer/app/platform/fabric/config.json
-      - ./first-network.json:/opt/explorer/app/platform/fabric/first-network.json
-      - ../test-network/organizations:/tmp/crypto
+      - ./connection-profile:/opt/explorer/app/platform/fabric/connection-profile
+      - ./organizations:/tmp/crypto
       - walletstore:/opt/explorer/wallet
     ports:
-      - 8080:8080
+      - ${PORT:-8080}:${PORT:-8080}
     depends_on:
       explorerdb.mynetwork.com:
         condition: service_healthy
