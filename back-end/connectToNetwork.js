@@ -6,7 +6,7 @@ async function connectToNetwork() {
   // load the network configuration
   const ccpPath = path.resolve(
     __dirname,
-    "/home/user/Decentralize web hoisting/fabric-samples",
+    "/home/user/Documents/Decentralize-web-hoisting",
     "test-network",
     "organizations",
     "peerOrganizations",
@@ -88,6 +88,8 @@ async function uploadFile(username, cid) {
     return { message: `Website upload failed: ${error.message}` };
   }
 }
+
+
 
 module.exports = {
   registerUser,

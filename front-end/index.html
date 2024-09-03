@@ -46,6 +46,8 @@
           <button type="submit">Register</button>
         </form>
         <p id="registerStatus"></p>
+        <!-- Login Button for already registered users -->
+        <p>Already registered? <button id="goToLogin">Login</button></p>
       </div>
 
       <!-- Login Form -->
@@ -71,15 +73,51 @@
 
       <!-- Upload Form (Hidden initially) -->
       <div class="form-card" id="uploadForm" style="display: none">
-        <h2>Upload Your Website</h2>
+        <h2>Upload Your Website or File</h2>
         <form id="upload">
-          <!-- Replace file input with a text input for the URL -->
-          <input type="text" id="username" placeholder="Enter your username" required /><br />
-          <input type="text" id="urlInput" placeholder="Enter website URL" required /><br />
+          <!-- Username input field -->
+          <input
+            type="text"
+            id="username"
+            placeholder="Enter your username"
+            required
+          /><br />
+
+          <!-- URL input field -->
+          <input
+            type="text"
+            id="websiteUrl"
+            placeholder="Enter website URL"
+          /><br />
+
+          <!-- File input field -->
+          <input type="file" id="fileInput" name="file" /><br />
+
+          <!-- Submit button -->
           <button type="submit">Upload</button>
         </form>
+
+        <!-- Status message -->
         <p id="status"></p>
       </div>
+
+      <!-- Retrieve a File or URL from IPFS -->
+      <div class="form-card">
+        <h2>Retrieve a File from IPFS</h2>
+        <form id="getFileForm">
+          <input
+            type="text"
+            id="cidInput"
+            name="cid"
+            placeholder="Enter CID"
+            required
+          />
+          <button type="submit">Get File</button>
+        </form>
+        <a id="downloadLink" style="display: none">Download File</a>
+        <p id="urlLink" style="display: none"></p>
+      </div>
+    </div>
     <script src="app.js"></script>
   </body>
 </html>

@@ -16,7 +16,7 @@ async function main() {
     // load the network configuration
     const ccpPath = path.resolve(
       __dirname,
-      "/home/user/Decentralize web hoisting/fabric-samples",
+      "/home/user/Documents/Decentralize-web-hoisting",
       "test-network",
       "organizations",
       "peerOrganizations",
